@@ -15,6 +15,7 @@ interface CartContextType {
     removeOneFromCart: (id: number) => void;
 }
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 export const CartContext = createContext<CartContextType | undefined>(undefined);
 
@@ -24,7 +25,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         async function fetchCartItems() {
             try {
-                const response = await fetch(`http://localhost:5000/cart`);
+                const response = await fetch(`${API_URL}/cart`);
                 const data = await response.json();
                 if (response.ok) {
                     setCartItems(data);
@@ -40,7 +41,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
     async function addToCart(item: Omit<CartItem, 'quantity'>) {
         try {
-            const response = await fetch(`http://localhost:5000/cart`, {
+            const response = await fetch(`${API_URL}/cart`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -69,7 +70,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
     async function removeFromCart(id: number) {
         try {
-            const response = await fetch(`http://localhost:5000/cart/${id}`, {
+            const response = await fetch(`${API_URL}/cart/${id}`, {
                 method: 'DELETE',
             });
             if (response.ok) {
@@ -84,7 +85,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
     async function removeOneFromCart(id: number) {
         try{
-            const response = await fetch(`http://localhost:5000/cart/${id}`, {
+            const response = await fetch(`${API_URL}/cart/${id}`, {
                 method: 'PATCH',
             })
             if(response.ok){

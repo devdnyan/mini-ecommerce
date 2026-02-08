@@ -1,0 +1,15 @@
+
+services:
+  backend:
+    build: ./products-backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./products-backend/.env
+
+  frontend:
+    build: ./product-app
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend

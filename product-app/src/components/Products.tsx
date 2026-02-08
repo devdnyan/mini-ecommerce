@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import type { data } from '../assets/dummy';
 import Card from './Card'
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 export default function Products() {
     const [products, setProducts] = useState<data[]>([]);
@@ -11,7 +11,7 @@ export default function Products() {
     useEffect(() => {
         async function fetchProducts() {
             try {
-                const response = await fetch(API_URL);
+                const response = await fetch(`${API_URL}/products`);
                 const data = await response.json();
                 setProducts(data.products);
             } catch (error) {
